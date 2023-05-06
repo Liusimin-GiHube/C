@@ -1,0 +1,23 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
+int is_levogyration_string(char* s1, const char* s2)
+{
+    char tmp[225] = { 0 };
+    strcpy(tmp, s1);
+    strcat(tmp, s1);
+    int x = strstr(tmp, s2);
+    return x!=NULL;
+}
+
+
+int main() 
+{
+    char s1[] = "AABCD";
+    char s2[] = "BCDAA";
+    int x =  is_levogyration_string(s1, s2);
+    printf("%d", x);
+    return 0;
+}
