@@ -1,0 +1,46 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+void reverse(char* src, int start, int end)
+{
+    int left = start;
+    int right = end;
+    char tmp = '0';
+    while (left < right)
+    {
+        tmp = src[left];
+        src[left] = src[right];
+        src[right] = tmp;
+        left++;
+        right--;
+    }
+}
+
+void left_spin(char* arr, int time)
+{
+    //字符串长度
+    int len = strlen(arr);
+    //确定旋转最后一个下标
+    int pos = time % len;
+    //旋转前time个字符
+    reverse(arr, 0, pos-1);
+    //旋转后time个字符
+    reverse(arr, pos, len-1);
+    //旋转前time个字符
+    reverse(arr, 0, len-1);
+}
+
+
+int main() 
+{
+    char arr[225] = { 0 };
+    int k = 0;
+    gets(arr);
+    scanf("%d", &k);
+    left_spin(arr,k);
+    printf("%s", arr);
+    return 0;
+}
