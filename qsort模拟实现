@@ -1,0 +1,44 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int char_compar(const void* dest, const void* src)
+{
+    int x = strcmp(dest, src);
+    return x;
+}
+
+void myqsort(void* src, int len, int sz, int(*char_compar)(const void*, const void*))
+{
+    // void 不方便加减，复制到新数组
+    //char*加减跳转为一
+    char* st = (char*)src;
+    //考虑 long double,防止溢出
+    char tmp[16] = { 0 };
+    for (int i = 0; i < len - 1; i++)
+    {
+        for (int j = 0; j < len-1-i; j++)
+        {
+            if (char_compar(st + j * sz, st + (j + 1) * sz)>0)
+            {
+                memcpy(tmp, st + j * sz, sz);
+                memcpy(st + j * sz, st + (j + 1) * sz, sz);
+                memcpy(st + (j + 1) * sz, tmp, sz);
+                int tag = 1;
+            }
+        }
+
+    }
+}
+
+
+int main() 
+{
+    char arr[8] = { 'i','a','m','h','a','p','p','y' };
+    int len = sizeof(arr)/sizeof(arr[0]);
+    myqsort(arr, len, sizeof(arr[0]), char_compar);
+    printf("%s\n", arr);
+    return 0;
+}
