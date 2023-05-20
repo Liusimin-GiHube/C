@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+void single_dog(int* arr,int len, int* p1, int* p2)
+{
+	int a = 0;
+	//^满足交换律，把数组全部异或
+	for(int i = 0; i<len; i++)
+	{
+		a ^= arr[i];
+	}
+
+	//找出第几位开始不同
+	int tem = 0;
+	for (int i = 0; i < 32; i++)
+	{
+		if (((a >> i) & 1) == 1)
+		{
+			tem = i;
+			break;
+		}
+	}
+
+	//以从右往左第一位为1的位数，0和1分组
+	for (int i = 0; i < len; i++)
+	{
+		if (((arr[i] >> tem) & 1) == 1)
+			*p1 ^= arr[i];
+		else
+			*p2 ^= arr[i];
+	}
+}
+
+
+int main()
+{
+	int arr[] = { 1,2,3,4,5,6,7,1,2,3,4,5 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	int dog1 = 0;
+	int dog2 = 0;
+	single_dog(arr, sz, &dog1, &dog2);
+	printf("%d %d",dog1,dog2);
+	return 0;
+}
